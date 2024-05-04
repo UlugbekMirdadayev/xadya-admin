@@ -51,7 +51,6 @@
 }
 .table table {
   width: 100%;
-
 }
 .table * {
   text-align: center;
@@ -72,4 +71,27 @@
   border-top: 1px dashed #c1c1c1;
   height: 0;
   margin: 10px 0;
+}
+@media only screen and (max-width: 850px) {
+  .sm-hidden,
+  .sidebar {
+    display: none !important;
+  }
+  .custome-flex-dr .select-custome,
+  .contents-bar {
+    width: 100% !important;
+  }
+  html {
+    font-size: 75%;
+  }
+  .custome-flex-dr {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .container-page > div {
+    padding: 5px 0px;
+  }
 }

@@ -64,8 +64,14 @@ const Dashboard = () => {
             </Flex>
           </Button>
         </Flex>
-        <Flex align={"flex-end"} gap={"lg"} my={"lg"}>
+        <Flex
+          align={"flex-end"}
+          gap={"lg"}
+          my={"lg"}
+          className="custome-flex-dr"
+        >
           <Select
+            className="select-custome"
             label="Ishchilar bo'yicha"
             data={[
               {
@@ -108,6 +114,7 @@ const Dashboard = () => {
           />
           <DatePickerInput
             required
+            className="select-custome"
             label="Sanasi bo'yicha"
             type="range"
             value={value}

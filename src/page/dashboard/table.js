@@ -138,7 +138,7 @@ export default function TableComponent({ data, user }) {
   };
   const rows = data?.orders?.map((element) => (
     <Table.Tr key={element?.id}>
-      <Table.Td>{element?.room_name}</Table.Td>
+      <Table.Td className="sm-hidden">{element?.room_name}</Table.Td>
       <Table.Td>{element?.user_name}</Table.Td>
       <Table.Td>{formatCurrencyUZS(element?.total)}</Table.Td>
       <Table.Td>
@@ -159,10 +159,12 @@ export default function TableComponent({ data, user }) {
       highlightOnHover
       withTableBorder
       withColumnBorders
+      stickyHeader
+      stickyHeaderOffset={60}
     >
       <Table.Thead>
         <Table.Tr>
-          <Table.Th>Xona/Stol raqami</Table.Th>
+          <Table.Th className="sm-hidden">Xona/Stol raqami</Table.Th>
           <Table.Th>Ofitsiant ismi</Table.Th>
           <Table.Th>Umumiy summa</Table.Th>
           <Table.Th>Sanasi</Table.Th>
@@ -181,20 +183,23 @@ export default function TableComponent({ data, user }) {
         )}
       </Table.Tbody>
       {data?.orders?.length ? (
-        <Table.Tfoot>
+        <Table.Tfoot
+          pos={"sticky"}
+          bottom={"0"}
+          bg={"#fff"}
+          style={{
+            zIndex: 99,
+          }}
+        >
           <Table.Tr />
           <Table.Tr>
-            <Table.Th colSpan={5}></Table.Th>
-          </Table.Tr>
-          <Table.Tr>
-            <Table.Th>
+            <Table.Th colSpan={2}>
               Umumiy summa: {formatCurrencyUZS(data?.total_turnover)}
             </Table.Th>
-            <Table.Th>
-              Umumiy foyda: {formatCurrencyUZS(data?.total_profit)}
-            </Table.Th>
-            <Table.Th>Jami zarar: {data?.total_damage}</Table.Th>
             <Table.Th>Jami buyurtmalar: {data?.total_cheque}</Table.Th>
+            <Table.Th colSpan={2}>
+              Ishchiga 6%: {formatCurrencyUZS(data?.total_turnover * 0.06)}
+            </Table.Th>
           </Table.Tr>
         </Table.Tfoot>
       ) : null}

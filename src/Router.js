@@ -76,6 +76,19 @@ export default function App() {
   }, [user?.is_active, navigate, pathname]);
 
   useEffect(() => {
+    window.addEventListener("resize", () => {
+      if (window.innerWidth <= 768 && user?.is_active) {
+        console.log("ismobile");
+        navigate("/");
+      }
+    });
+    if (window.innerWidth <= 768 && user?.is_active) {
+      console.log("ismobile");
+      navigate("/");
+    }
+  }, [navigate, user?.is_active]);
+
+  useEffect(() => {
     const socket = new WebSocket(SOCKET_SERVER_URL); // Replace with your WebSocket server URL
 
     socket.onopen = () => {
@@ -107,11 +120,11 @@ export default function App() {
 
   return (
     <Flex maw={"100vw"} gap={20} gutter={0}>
-      <Box miw={200} display={isHideSideBar ? "none" : "block"}>
+      <Box miw={200} display={isHideSideBar ? "none" : "block"} className="sidebar">
         <Sidebar />
       </Box>
 
-      <Box
+      <Box className="contents-bar"
         w={`calc(100dvw - ${isHideSideBar ? "0px" : "200px"})`}
         mih={isHideSideBar ? "100dvh" : "none"}
         pos={"relative"}
