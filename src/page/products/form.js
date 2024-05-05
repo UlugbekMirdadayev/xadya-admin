@@ -22,12 +22,8 @@ const inputs = [
     label: "Nomi",
   },
   {
-    name: "body_price",
-    label: "Tan narxi",
-  },
-  {
     name: "sell_price",
-    label: "Sotilish narxi",
+    label: "Narxi",
   },
   {
     name: "quantity",
@@ -52,7 +48,6 @@ function FormCreate({ handleOrders, close, editForm, setEditForm }) {
       photo: image,
       is_infinite: String(editForm?.is_infinite || "false"),
       quantity: editForm?.quantity || "",
-      body_price: editForm?.body_price || "",
       sell_price: editForm?.sell_price || "",
     },
   });
@@ -60,6 +55,7 @@ function FormCreate({ handleOrders, close, editForm, setEditForm }) {
   const onSubmit = (values) => {
     if (!values.photo) return toast.info("Rasm yuklang !");
     values.is_infinite === "true" && delete values.quantity;
+    values.body_price = values.sell_price;
     const formData = new FormData();
     Object.keys(values).map((key) =>
       formData.append(
