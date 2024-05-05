@@ -6,9 +6,11 @@ import { useDispatch } from "react-redux";
 import TableComponent from "./table";
 import { useReport, useUser, useWaiter } from "../../redux/selectors";
 import { setLoader } from "../../redux/loaderSlice";
-import { postRequest } from "../../services/api";
+import { getRequest, postRequest } from "../../services/api";
 import { setReport } from "../../redux/reportSlice";
+import { setWaiters } from "../../redux/waiterSlice";
 import { Reload } from "../../components/icon";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   const user = useUser();
@@ -42,6 +44,25 @@ const Dashboard = () => {
     [user?.token, dispatch]
   );
 
+  const handleGetWaiters = useCallback(
+    (update) => {
+      if (!update && waiters?.length) return;
+      dispatch(setLoader(true));
+      getRequest("user/get", user?.token)
+        .then(({ data }) => {
+          dispatch(setLoader(false));
+          dispatch(
+            setWaiters(data?.result?.filter((item) => item?.role !== 1))
+          );
+        })
+        .catch((err) => {
+          dispatch(setLoader(false));
+          toast.error(err?.response?.data?.result || "Error");
+        });
+    },
+    [dispatch, waiters?.length, user?.token]
+  );
+
   useEffect(() => {
     if (report?.length) return null;
     getReport(true, {
@@ -51,6 +72,10 @@ const Dashboard = () => {
       to_date: moment(new Date()).format("YYYY-MM-DD"),
     });
   }, [getReport, report?.length]);
+
+  useEffect(() => {
+    handleGetWaiters();
+  }, [handleGetWaiters]);
 
   return (
     <div className="container-page">

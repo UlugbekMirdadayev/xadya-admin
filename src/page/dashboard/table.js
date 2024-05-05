@@ -68,7 +68,20 @@ export default function TableComponent({ data, user }) {
           className="modal-print"
           style={{ display: `${open ? "flex" : "none"}` }}
         >
-          <div>
+          <div
+            style={{
+              position: "absolute",
+              zIndex: 2,
+              inset: 0,
+            }}
+            onClick={() => setOpen(false)}
+          ></div>
+          <div
+            style={{
+              zIndex: 3,
+              position: "relative",
+            }}
+          >
             <Button w={"100%"} mt={"lg"} onClick={() => setOpen(false)}>
               Orqaga
             </Button>
@@ -112,16 +125,33 @@ export default function TableComponent({ data, user }) {
                       </tr>
                       <tr>
                         <td className="left" colSpan={2}>
-                          Umumiy summa
+                          Hisob
                         </td>
                         <td className="right">
                           {formatCurrencyUZS(order?.total)}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="left" colSpan={2}>
+                          Xizmat haqi
+                        </td>
+                        <td className="right">
+                          {formatCurrencyUZS(order?.total * 0.1)}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="left" colSpan={2}>
+                          Umumiy hisob
+                        </td>
+                        <td className="right">
+                          {formatCurrencyUZS(order?.total + order?.total * 0.1)}
                         </td>
                       </tr>
                     </tfoot>
                   </table>
                 </div>
                 <Button
+                  className="sticky-btn"
                   w={"100%"}
                   mt={"lg"}
                   onClick={handlePrint}
